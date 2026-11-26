@@ -1,19 +1,27 @@
-# 2lus Preview
+# 2lus Preview — public static artifacts only
 
-**Public design-preview artifacts only.** The actual 2lus source code remains in a separate **private** GitHub repository.
+This repository contains **only the compiled, public HTML/CSS article-design preview**. The full 2lus Java / React / SQL / Docker source remains in the separate **private** `hrdtimoo-rgb/2lus` repository.
 
-This repository stores generated static HTML/CSS for an article-layout preview. It does not include backend source, frontend source, database contents, credentials, user uploads, or unpublished JSON drafts.
+Public pages currently included:
+- `/index.html` — preview home
+- `/articles/iceland-complete-guide/` — approved Iceland article layout
+- `/articles/busan-3-day-first-timer/` — approved Busan article layout
 
-The preview is a design mock, not a fully functional React/Spring Boot site. It intentionally does not provide login, short links, file uploads or live API functions. Official SEO and the live application remain at https://2lus.cc/.
+The pages are static design demonstrations, **not** the functional 2lus frontend. They cannot provide login, short links, uploads, Admin functions, API access or real DB data. They contain `noindex,nofollow,noarchive` because the official SEO site is https://2lus.cc/. The preview content is **publicly readable** even when the private source repository is not.
 
-## Publish this site
+## Enable the free GitHub Pages website (owner setting)
 
-GitHub → this repository → **Settings → Pages** → **Build and deployment → Source: GitHub Actions**. Then inspect the **Deploy 2lus preview (public artifacts only)** workflow in Actions. If your GitHub Pages setup uses **Deploy from a branch**, use **main / (root)** instead.
+Open **Settings → Pages** in this repository:
 
-Expected URL after successful Pages deployment: https://hrdtimoo-rgb.github.io/2lus-preview/ . This URL is NOT active merely because repository files exist.
+1. Under **Build and deployment**, set **Source = Deploy from a branch**.
+2. Set **Branch = main**, **Folder = / (root)**.
+3. Click **Save**.
+4. Verify Pages completed successfully; then open https://hrdtimoo-rgb.github.io/2lus-preview/.
 
-All preview content here is public and should be treated as such, even though search engines are asked not to index it.
+Pages is not enabled merely by committing HTML. A 404 before this setting succeeds is expected.
 
-## Source-of-truth
+## Future synchronization
 
-Private source repository: `hrdtimoo-rgb/2lus`; only explicitly reviewed static preview artifacts should be copied from it. To enable automatic updating across repositories, configure an owner-scoped publishing token in the private repository; never place that credential here.
+The private source repository contains `scripts/build-pages-preview.py`, which exports **only** exact allowlisted, previously approved travel article blobs. After an owner configures its Actions secret `PREVIEW_REPO_TOKEN` (a fine-grained PAT with **Contents: Read and write** on **only** `2lus-preview`), the private GitHub Actions workflow can push the generated HTML/CSS to this public repository.
+
+**Never** copy the entire private repository or its source archives to `2lus-preview`, and never commit a token. Changes to draft JSON require independent approval before they may appear in this public site.
